@@ -30,11 +30,11 @@ public class BST<T extends Comparable<T>> {
         }
 
         public void setData(T data) {
-            this.data = d;
+            this.data = data;
         }
 
         public void setLeft(BSTNode left) {
-            this.left = l;
+            this.left = left;
         }
 
         public BSTNode getLeft() {
@@ -42,7 +42,7 @@ public class BST<T extends Comparable<T>> {
         }
 
         public void setRight(BSTNode right) {
-            this.right = r;
+            this.right = right;
         }
 
         public BSTNode getRight() {
