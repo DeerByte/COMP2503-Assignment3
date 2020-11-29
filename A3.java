@@ -19,13 +19,14 @@ public class A3 {
 	private BST<Avenger> mentionBST = new BST<>(new mentionIndexComparator());
 	private BST<Avenger> alphabeticalBST= new BST<>();
 	private BST<Avenger> mostPopularBST = new BST<> (new DescendingComparator());
-	private BST<Avenger> leastPopularBST = new BST<>(new AscendingComparator())
+    private BST<Avenger> leastPopularBST = new BST<>(new AscendingComparator());
+    private LinkedQueue<Avenger> mentionQueue = new LinkedQueue<>();
     
 
 
 public static void main(String[] args) {
-    A3 a1 = new A3();
-    a1.run();
+    A3 a3 = new A3();
+    a3.run();
 }
 
 public void run() {
