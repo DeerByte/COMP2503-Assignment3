@@ -1,8 +1,14 @@
+
 public class BST<T extends Comparable<T>> implements Iterable<T> {
+
     class BSTNode implements Comparable<BSTNode> {
         private T data;
         private BSTNode left;
         private BSTNode right;
+        private int key;
+        private BST<T>.BSTNode rightChild;
+        private BST<T>.BSTNode leftChild;
+        
 
         /**
          * Non-parameterized BSTNode constructor. Sets all instance variables to null.
@@ -29,11 +35,11 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
             return data;
         }
 
-        public void setData(T data) {
+        public void setData(T d) {
             this.data = d;
         }
 
-        public void setLeft(BSTNode left) {
+        public void setLeft(BSTNode l) {
             this.left = l;
         }
 
@@ -41,7 +47,7 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
             return left;
         }
 
-        public void setRight(BSTNode right) {
+        public void setRight(BSTNode r) {
             this.right = r;
         }
 
@@ -56,35 +62,168 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
         /**
          * REMOVE METHOD, UNTESTED
          */
-        public boolean remove(int value, BSTNode parent) {
-            if (value < this.value) {
-                if (left != null)
-                    return left.remove(value, this);
-                else
-                    return false;
-            } else if (value > this.value) {
-                if (right != null)
-                    return right.remove(value, this);
-                else
-                    return false;
-            } else {
-                if (left != null && right != null) {
-                    this.value = right.minValue();
-                    right.remove(this.value, this);
-                } else if (parent.left == this) {
-                    parent.left = (left != null) ? left : right;
-                } else if (parent.right == this) {
-                    parent.right = (left != null) ? left : right;
+        public boolean remove(int key) {
+
+            BSTNode focus = root;
+            BSTNode parent = root;
+    
+            boolean isItALeftChild = true;
+    
+            while (focus.key != key) {
+    
+                parent = focus;
+    
+                // To find out if we go left or right
+    
+                if (key < focus.key) {
+    
+                    isItALeftChild = true;
+    
+                    focus = focus.leftChild;
+    
+                } else {
+    
+                    isItALeftChild = false;
+    
+                    focus = focus.rightChild;
+    
                 }
-                return true;
+    
+                // If node is not found false
+    
+                if (focus == null)
+                    return false;
+    
             }
+    
+            // Case of which node has no children
+    
+            if (focus.leftChild == null && focus.rightChild == null) {
+    
+                // if it is just simply a root, we delete it
+
+                if (focus == root)
+                    root = null;
+    
+                // If it was marked as a left child
+                // of the parent delete it in its parent
+    
+                else if (isItALeftChild)
+                    parent.leftChild = null;
+    
+                // opposite for right
+    
+                else
+                    parent.rightChild = null;
+    
+            }
+    
+            // If no right child
+    
+            else if (focus.rightChild == null) {
+    
+                if (focus == root)
+                    root = focus.leftChild;
+    
+                // If focus Node was on the left of parent
+                // move the focus Nodes left child up to the
+                // parent node
+    
+                else if (isItALeftChild)
+                    parent.leftChild = focus.leftChild;
+    
+                else
+                    parent.rightChild = focus.leftChild;
+    
+            }
+    
+            // If no left child
+    
+            else if (focus.leftChild == null) {
+    
+                if (focus == root)
+                    root = focus.rightChild;
+    
+                // If focus Node was on the left of parent
+                // move the focus Nodes right child up to the
+                // parent node
+    
+                else if (isItALeftChild)
+                    parent.leftChild = focus.rightChild;
+    
+                else
+                    parent.rightChild = focus.rightChild;
+    
+            }
+    
+            // Case of two children we need to find a replacement node with a helper method
+    
+            else {
+
+                BSTNode replacement = getReplacementNode(focus);
+    
+                // If the focusNode is root replace root
+                // with the replacement
+    
+                if (focus == root)
+                    root = replacement;
+    
+                // If the deleted node was a left child
+                // make the replacement the left child
+    
+                else if (isItALeftChild)
+                    parent.leftChild = replacement;
+    
+                // we do the opposite for right child
+    
+                else
+                    parent.rightChild = replacement;
+    
+                replacement.leftChild = focus.leftChild;
+    
+            }
+    
+            return true;
+            
+        }
+    
+        //Helper method to get the replacement node
+
+        public BSTNode getReplacementNode(BSTNode replacedNode) {
+    
+            BSTNode replacementParent = replacedNode;
+            BSTNode replacement = replacedNode;
+            BSTNode focusNode = replacedNode.rightChild;
+    
+            // if there are no left children we do this
+    
+            while (focusNode != null) {
+    
+                replacementParent = replacement;
+    
+                replacement = focusNode;
+    
+                focusNode = focusNode.leftChild;
+    
+            }
+    
+
+            // moving the replacement node into the parent's leftchild node
+            //and then move the replaced nodes righ child into the replacement's right child
+
+            if (replacement != replacedNode.rightChild) {
+    
+                replacementParent.leftChild = replacement.rightChild;
+                replacement.rightChild = replacedNode.rightChild;
+    
+            }
+            return replacement;
         }
 
-        public int minValue() {
-            if (left == null)
-                return value;
-            else
-                return left.minValue();
+        @Override
+        public int compareTo(BST<T>.BSTNode o) {
+            // TODO Auto-generated method stub
+            return 0;
         }
     }
 
@@ -143,39 +282,6 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
         } else {
             add(root, node);
         }
-    }
-
-    /**
-     * REMOVE METHOD, UNTESTED
-     */
-    public boolean remove(int value) {
-
-        if (root == null)
-
-            return false;
-
-        else {
-
-            if (root.getValue() == value) {
-
-                BSTNode auxRoot = new BSTNode(0);
-
-                auxRoot.setLeftChild(root);
-
-                boolean result = root.remove(value, auxRoot);
-
-                root = auxRoot.getLeft();
-
-                return result;
-
-            } else {
-
-                return root.remove(value, null);
-
-            }
-
-        }
-
     }
 
     /**
@@ -280,18 +386,6 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
             return rightheight + 1;
         }
     }
-
-    // *** Prof's method ***
-    // Ask about '?'
-    // private int height(BSTNode r) {
-    // int height = -1;
-    // if (r != null) {
-    // int rightheight = height(r.getRight());
-    // int leftheight = height(r.getLeft());
-    // height = (rightheight > leftheight ? 1 + rightheight : 1 + leftheight);
-    // }
-    // return height;
-    // }
 
     /*
      * Traverse the tree. travtype determines the type of traversal to perform.
