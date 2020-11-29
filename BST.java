@@ -1,4 +1,4 @@
-public class BST<T extends Comparable<T>> {
+public class BST<T extends Comparable<T>> implements Iterable<T> {
     class BSTNode implements Comparable<BSTNode> {
         private T data;
         private BSTNode left;
@@ -216,6 +216,10 @@ public class BST<T extends Comparable<T>> {
      */
     public void preOrder() {
         traverse(root, PREORDER);
+    }
+
+    public Iterator<T> iterator() {
+        return new BSTIterator<T>(this);
     }
 
     // Private methods.

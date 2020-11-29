@@ -2,7 +2,7 @@
  * @author Justin 
  * Node class with private variables, constructors, get/set, toString methods
  */
-public class Node<T extends Comparable<T>> {
+public class Node<T> {
 
     private T data;
     private Node<T> next;

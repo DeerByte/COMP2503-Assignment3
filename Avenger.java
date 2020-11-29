@@ -10,7 +10,7 @@ public class Avenger implements Comparable<Avenger>{
 	private String heroAlias;
 	private String lastName;
 	private int frequencyMentioned;
-
+	private int sequenceMentioned;
 	/**
 	 * Class Constructor. Instantiates an Avenger object of the specified alias and lastName, with a frequency mentioned of 0.
 	 * @param alias - String representation of the Avenger alias.
@@ -20,6 +20,7 @@ public class Avenger implements Comparable<Avenger>{
 		heroAlias = alias;
 		this.lastName = lastName;
 		frequencyMentioned = 0;
+		sequenceMentioned = 0;
 	}
 	
 	/**
@@ -33,6 +34,7 @@ public class Avenger implements Comparable<Avenger>{
 		heroAlias = alias;
 		this.lastName = lastName;
 		this.frequencyMentioned = frequencyMentioned;
+		sequenceMentioned = 0;
 	}
 	
 	/**
@@ -49,6 +51,14 @@ public class Avenger implements Comparable<Avenger>{
 	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public void setSequenceMentioned(int numInSequence) {
+		sequenceMentioned = numInSequence;
+	}
+
+	public int getSequenceMentioned() {
+		return sequenceMentioned;
 	}
 	
 	/**

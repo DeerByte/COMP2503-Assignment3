@@ -14,9 +14,9 @@ public class A3 {
 
 	private int topN = 4;
 	private int totalwordcount = 0;
-	private int avengerMentionIndexValue = 0;
+	private int avengerSequenceIndex = 0;
 	private Scanner input = new Scanner(System.in);
-	private BST<Avenger> mentionBST = new BST<>(new mentionindexComparator());
+	private BST<Avenger> mentionBST = new BST<>(new mentionIndexComparator());
 	private BST<Avenger> alphabeticalBST= new BST<>();
 	private BST<Avenger> mostPopularBST = new BST<> (new DescendingComparator());
 	private BST<Avenger> leastPopularBST = new BST<>(new AscendingComparator())
@@ -60,16 +60,16 @@ private void readInput() {
 
             if (rosterIndex != -1) {
                 Avenger hero = createAvenger(rosterIndex);
-				if (alphabeticalBST.find(hero)) 
-				{
-					alphabeticalBST.getData(hero).mentioned();
+				if (alphabeticalBST.contains(hero)) {
+					alphabeticalBST.find(hero).mentioned();
 				}
 		
 				else
 				{
+                    hero.setSequenceMentioned(avengerSequenceIndex);
 					alphabeticalBST.add(hero);
-					avengerMentionIndexValue++;
-					alphabeticalBST.getData(hero).mentionIndexSetter(avengerMentionIndexValue);
+					avengerSequenceIndex++;
+					// alphabeticalBST.getData(hero).mentionIndexSetter(avengerMentionIndexValue); This increases the time complexity of operations, can be done prior to BST.add(T e).
 				}
             }
         }
@@ -84,10 +84,11 @@ private String cleanWord(String next) {
     // All other punctuation and numbers are skipped.
     String ret;
     int inx = next.indexOf('\'');
-    if (inx != -1)
+    if (inx != -1) {
         ret = next.substring(0, inx).toLowerCase().trim().replaceAll("[^a-z]", "");
-    else
+    } else {
         ret = next.toLowerCase().trim().replaceAll("[^a-z]", "");
+    }
     return ret;
 }
 
@@ -133,18 +134,22 @@ private String cleanWord(String next) {
     private void createdOrderedBST() {
     for (Avenger a : alphabeticalBST)
         {
+            // These operations aren't relevant when creating ordered BSTs. Moving to other method.
+            // if (a.getAlias().equals("hawkeye"))
+            // {
+            //     alphabeticalBST.remove(a);
+            // }
 
-            if (a.getAlias().equals("hawkeye"))
-            {
-                alphabeticalBST.remove(a);
-            }
+            // else
+            // {
+            //     mentionBST.add(a);
+            //     mostPopularBST.add(a);
+            //     leastPopularBST.add(a);
+            // }
 
-            else
-            {
-                mentionBST.add(a);
-                mostPopularBST.add(a);
-                leastPopularBST.add(a);
-            }
+            mentionBST.add(a);
+            mostPopularBST.add(a);
+            leastPopularBST.add(a);
         }
     }
 
