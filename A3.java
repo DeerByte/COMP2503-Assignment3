@@ -1,8 +1,5 @@
 import java.util.Scanner;
-
-
-
-
+import java.util.Iterator;
 
 
 public class A3 {
@@ -20,7 +17,7 @@ public class A3 {
 	private BST<Avenger> alphabeticalBST= new BST<>();
 	private BST<Avenger> mostPopularBST = new BST<> (new DescendingComparator());
     private BST<Avenger> leastPopularBST = new BST<>(new AscendingComparator());
-    private LinkedQueue<Avenger> mentionQueue = new LinkedQueue<>();
+    private LinkedQueue<String> mentionQueue = new LinkedQueue<>();
     
 
 
@@ -31,6 +28,7 @@ public static void main(String[] args) {
 
 public void run() {
     readInput();
+    removeProtected("hawkeye");
     createdOrderedBST();
     printResults();
 }
@@ -130,28 +128,19 @@ private String cleanWord(String next) {
 	}
 
  
-  //TODO: move remove Hawkeye thing
     
     private void createdOrderedBST() {
     for (Avenger a : alphabeticalBST)
         {
-            // These operations aren't relevant when creating ordered BSTs. Moving to other method.
-            // if (a.getAlias().equals("hawkeye"))
-            // {
-            //     alphabeticalBST.remove(a);
-            // }
-
-            // else
-            // {
-            //     mentionBST.add(a);
-            //     mostPopularBST.add(a);
-            //     leastPopularBST.add(a);
-            // }
-
             mentionBST.add(a);
             mostPopularBST.add(a);
             leastPopularBST.add(a);
         }
+    }
+
+    protected void removeProtected(String avengerAlias) {
+        Avenger protectedIdentity = createAvenger(getRosterIndex(avengerAlias));
+        alphabeticalBST.remove(protectedIdentity);
     }
 
 
@@ -166,11 +155,8 @@ private String cleanWord(String next) {
 
 		System.out.println("All avengers in the order they appeared in the input stream:");
 
-        Iterator<Avenger> mentionPrint = mentionBST.iterator();
-
-        while (mentionPrint.hasNext())
-        {
-            System.out.println(mentionPrint.next());
+        for( Avenger a : mentionBST) {
+            System.out.println(a);
         }
 
 		System.out.println();
@@ -206,6 +192,16 @@ private String cleanWord(String next) {
             System.out.println(alphabeticalPrint.next());
         }
 		
-		System.out.println();
+        System.out.println();
+        
+        // TODO: Print the actual height and the optimal height for each of the four trees.
+//		System.out.println("Height of the mention order tree is : " + ??
+//				+ " (Optimal height for this tree is : " + ?? + ")");
+//		System.out.println("Height of the alphabetical tree is : " + ??
+//				+ " (Optimal height for this tree is : " + ?? + ")");
+//		System.out.println("Height of the most frequent tree is : " + ??
+//				+ " (Optimal height for this tree is : " + ?? + ")");
+//		System.out.println("Height of the least frequent tree is : " + ??
+//				+ " (Optimal height for this tree is : " + ?? + ")");
 	}
 }
