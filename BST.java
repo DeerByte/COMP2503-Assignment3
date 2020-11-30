@@ -1,5 +1,6 @@
 
 import java.util.Comparator;
+import java.util.Iterator;
 
 public class BST<T extends Comparable<T>> implements Iterable<T> {
     
@@ -172,7 +173,7 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
         traverse(root, PREORDER);
     }
 
-    public BSTIterator<T> iterator() {
+    public Iterator<T> iterator() {
         return new BSTIterator<T>(this);
     }
 
