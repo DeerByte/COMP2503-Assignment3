@@ -201,7 +201,7 @@ private String cleanWord(String next) {
         System.out.println();
         
         System.out.println("Height of the mention order tree is : " + mentionBST.height()
-        + " (Optimal height for this tree is : " + optHeight(mentionBST.size()) + ")");
+        + " (Optimal height for this tree is : " + optimalHeight(mentionBST.size()) + ")");
 
 
         // TODO: Print the actual height and the optimal height for each of the four trees.
@@ -214,7 +214,7 @@ private String cleanWord(String next) {
 //		System.out.println("Height of the least frequent tree is : " + ??
 //				+ " (Optimal height for this tree is : " + ?? + ")");
     }
-    private int optHeight (int n){
+    private int optimalHeight (int n){
         double h = Math.log(n + 1) / Math.log(2) - 1;
         if (Math.round(h) < h)
             return (int) Math.round(h) + 1;
