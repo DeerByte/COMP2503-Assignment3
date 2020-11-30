@@ -324,7 +324,7 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
         traverse(root, PREORDER);
     }
 
-    public Iterator<T> iterator() {
+    public BSTIterator<T> iterator() {
         return new BSTIterator<T>(this);
     }
 
