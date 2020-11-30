@@ -1,7 +1,7 @@
 
 import java.util.Comparator;
 
-public class BST<T extends Comparable<T>> {
+public class BST<T extends Comparable<T>> implements Iterable<T> {
     
     private Comparator<T> comparator;
 
@@ -172,6 +172,10 @@ public class BST<T extends Comparable<T>> {
         traverse(root, PREORDER);
     }
 
+    public BSTIterator<T> iterator() {
+        return new BSTIterator<T>(this);
+    }
+
     /**
          * REMOVE METHOD, UNTESTED
          */
@@ -297,6 +301,8 @@ public class BST<T extends Comparable<T>> {
 
             return true;
         }
+
+
     
     // Private methods.
 
