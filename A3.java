@@ -164,6 +164,9 @@ private String cleanWord(String next) {
 		System.out.println("Top " + topN + " most popular avengers:");
 
         Iterator<Avenger> mostPopularPrint = mostPopularBST.iterator();
+        for (int i = 0; i < 4 && mostPopularPrint.hasNext(); i++){
+            System.out.println(mostPopularPrint.next());
+        }
 
         while (mostPopularPrint.hasNext())
         {
@@ -175,8 +178,11 @@ private String cleanWord(String next) {
 		System.out.println("Top " + topN + " least popular avengers:");
 
         Iterator<Avenger> leastPopularPrint = leastPopularBST.iterator();
-
+        for (int i = 0; i < 4 && leastPopularPrint.hasNext(); i++){
+            System.out.println(leastPopularPrint.next());
+        }
         while (leastPopularPrint.hasNext())
+        
         {
             System.out.println(leastPopularPrint.next());
         }
