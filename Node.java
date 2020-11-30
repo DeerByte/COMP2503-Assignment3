@@ -1,38 +1,41 @@
 /**
- * @author Justin 
+ * @author Justin, DeerByte
  * Node class with private variables, constructors, get/set, toString methods
  */
 public class Node<T> {
 
-    private T data;
-    private Node<T> next;
+    private T data = null;
+    private Node<T> next = null;
 
     public Node() {
-        data = null;
-        next = null;
+
     }
     /**
      * Constructor for objects of class Node
      */
-    public Node(T data) {
-        this.data = data;
-        next = null;
+    public Node(T element) {
+        this.data = element;
+    }
+
+    public Node(T element, Node<T> next) {
+        data = element;
+        this.next = next;
     }
 
     public T getData() {
         return data;
     }
 
-    public void setData(T o) {
-        data = o;
-        }
+    public void setData(T element) {
+        data = element;
+    }
 
     public Node<T> getNext() {
         return next;
     }
-
-    public void setNext(Node<T> n) {
-        next = n;
+    
+    public void setNext(Node<T> node) {
+        next = node;
     }
 
     public boolean hasNext() {

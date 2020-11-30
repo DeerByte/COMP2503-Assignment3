@@ -61,7 +61,7 @@ private void readInput() {
 
             if (rosterIndex != -1) {
                 Avenger hero = createAvenger(rosterIndex);
-				if (alphabeticalBST.contains(hero)) {
+				if (alphabeticalBST.find(hero) != null) {
 					alphabeticalBST.find(hero).mentioned();
 				}
 		
@@ -130,7 +130,7 @@ private String cleanWord(String next) {
 	}
 
  
-  
+  //TODO: move remove Hawkeye thing
     
     private void createdOrderedBST() {
     for (Avenger a : alphabeticalBST)
