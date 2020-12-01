@@ -10,7 +10,7 @@ import java.util.Comparator;
 public class AscendingComparator implements Comparator<Avenger>{
 
     public int compare(Avenger a1, Avenger a2){
-        int compareFrequency = a1.getFreqMentioned() - a2.getFreqMentioned();
+        int compareFrequency = a1.getFrequencyMentioned() - a2.getFrequencyMentioned();
         
         if (compareFrequency != 0) {
             return compareFrequency;
