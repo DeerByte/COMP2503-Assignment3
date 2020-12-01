@@ -104,8 +104,19 @@ public class LinkedQueue<T> {
         return returnNode.getData();
     }
 
+    /**
+     * Returns the size of the LinkedQueue.
+     * @return int - number of elements in queue.
+    */
     public int size() {
         return size;
+    }
+    /**
+     * Returns true if queue contains no elements.
+     * @return true - iff queue is empty
+     */
+    public boolean isEmpty() {
+        return head == null;
     }
 
     
