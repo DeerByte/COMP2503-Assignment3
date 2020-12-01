@@ -5,6 +5,6 @@ import java.util.Comparator;
  */
 public class MentionIndexComparator implements Comparator<Avenger> {
     public int compare(Avenger a1, Avenger a2) {
-        return a1.getSequenceMentioned() - a2.getSequenceMentioned();
+        return a1.getMentionedIndex() - a2.getMentionedIndex();
     }
 }
