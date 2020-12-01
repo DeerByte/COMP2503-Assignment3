@@ -13,11 +13,11 @@ public class A3 {
 	private int totalwordcount = 0;
 	private int avengerSequenceIndex = 0;
 	private Scanner input = new Scanner(System.in);
-	private BST<Avenger> mentionBST = new BST<>(new mentionIndexComparator());
+	private BST<Avenger> mentionBST = new BST<>(new MentionIndexComparator());
 	private BST<Avenger> alphabeticalBST= new BST<>();
 	private BST<Avenger> mostPopularBST = new BST<> (new DescendingComparator());
     private BST<Avenger> leastPopularBST = new BST<>(new AscendingComparator());
-    private LinkedQueue<String> mentionQueue = new LinkedQueue<>();
+    //private LinkedQueue<String> mentionQueue = new LinkedQueue<>();
     
 
 
@@ -65,7 +65,7 @@ private void readInput() {
 		
 				else
 				{
-                    hero.setSequenceMentioned(avengerSequenceIndex);
+                    hero.setMentionedIndex(avengerSequenceIndex);
 					alphabeticalBST.add(hero);
 					avengerSequenceIndex++;
 					// alphabeticalBST.getData(hero).mentionIndexSetter(avengerMentionIndexValue); This increases the time complexity of operations, can be done prior to BST.add(T e).
