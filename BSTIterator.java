@@ -20,6 +20,7 @@ public class BSTIterator<T extends Comparable<T>> implements Iterator<T>{
         if (pointer == null) {
             throw new NoSuchElementException();
         }
+        
         T obj = pointer.getData();
         pointer = pointer.getNext();
 
