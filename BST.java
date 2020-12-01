@@ -1,18 +1,36 @@
-
 import java.util.Comparator;
 import java.util.Iterator;
 
 public class BST<T extends Comparable<T>> implements Iterable<T> {
     
     private Comparator<T> comparator;
+    public static final int INORDER = 0;
+    public static final int PREORDER = 1;
+    public static final int POSTORDER = 2;
+    private BSTNode root;
+    private int size;
+
+    /**
+	 * Non-parameterized constructor of BST class. 
+	 * Sets size at 0, and root as null. 
+	 */
+	public BST() {
+		root = null;
+        size = 0;
+	}
+
+    public BST(Comparator <T> comp){
+        root = null;
+        size = 0;
+        comparator = comp;
+    }
+    
 
     class BSTNode implements Comparable<BSTNode> {
         private T data;
         private BSTNode left;
         private BSTNode right;
-        private int key;
         private BST<T>.BSTNode rightChild;
-        private BST<T>.BSTNode leftChild;
         
 
         /**
@@ -66,49 +84,22 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
 
         @Override
         public int compareTo(BST<T>.BSTNode o) {
-            
             // Call compareTo method of an Avengers type Object
             return this.getData().compareTo(o.getData());
         }
 
-        /* TODO: toString method of BSTNode class */
         @Override
         public String toString() {
-            return "";
+            return getData().toString();
         }
 
         /* TODO: equals method of BSTNode class */
         @Override
-        public boolean equals() {
+        public boolean equals(Object other) {
             return false;
         }
     }
-// node class end
-
-
-        
-
-        
-
-    public static final int INORDER = 0;
-    public static final int PREORDER = 1;
-    public static final int POSTORDER = 2;
-
-    private BSTNode root;
-    private int size;
-
-    /**
-	 * Non-parameterized constructor of BST class. 
-	 * Sets size at 0, and root as null. 
-	 */
-	public BST() {
-		root = null;
-        size = 0;
-	}
-
-    public BST(Comparator <T> comp){
-        comparator = comp;
-    }
+// node class end   
 
     /**
      * TODO: find() javadoc of BST class Return true if element data is present in
@@ -193,21 +184,18 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
                 parent = focus;
     
                 // To find out if we go left or right
-    
                 if (focus.compareTo(toRemove) == -1) {
-    
                     isItALeftChild = true;
                     focus = focus.getLeft();
     
                 } else {
-    
+
                     isItALeftChild = false;
                     focus = focus.getRight();
     
                 }
     
                 // If node is not found false
-    
                 if (focus == null)
                     return false;
     
@@ -219,7 +207,7 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
     
                 // if it is just simply a root, we delete it
 
-                if (focus == root) {}
+                if (focus == root)
                     root = null;
     
                 // If it was marked as a left child
@@ -240,36 +228,38 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
             else if (focus.getRight() == null) {
     
                 if (focus == root)
-                    root = focus.leftChild;
+                    root = focus.getLeft();
     
                 // If focus Node was on the left of parent
                 // move the focus Nodes left child up to the
                 // parent node
     
                 else if (isItALeftChild)
-                    parent.leftChild = focus.leftChild;
+                    parent.setLeft(focus.getLeft());
+
     
                 else
-                    parent.rightChild = focus.leftChild;
+                    parent.setRight(focus.getLeft());
+
     
             }
     
             // If no left child
     
-            else if (focus.leftChild == null) {
+            else if (focus.getLeft() == null) {
     
                 if (focus == root)
-                    root = focus.rightChild;
+                    root = focus.getRight();
     
                 // If focus Node was on the left of parent
                 // move the focus Nodes right child up to the
                 // parent node
     
                 else if (isItALeftChild)
-                    parent.leftChild = focus.rightChild;
+                    parent.setLeft(focus.getRight());
     
                 else
-                    parent.rightChild = focus.rightChild;
+                    parent.setRight(focus.getRight());
     
             }
     
@@ -279,7 +269,7 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
 
                 BSTNode replacement = getReplacementNode(focus);
     
-                // If the focusNode is root replace root
+                // If the focus is root replace root
                 // with the replacement
     
                 if (focus == root)
@@ -289,14 +279,14 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
                 // make the replacement the left child
     
                 else if (isItALeftChild)
-                    parent.leftChild = replacement;
+                    parent.setLeft(replacement);
     
                 // we do the opposite for right child
     
                 else
-                    parent.rightChild = replacement;
+                    parent.setLeft(replacement);
     
-                replacement.leftChild = focus.leftChild;
+                replacement.setLeft(focus.getLeft());
     
             }  
 
@@ -322,7 +312,7 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
 
     /* Do the actual add of node n to tree rooted at r */
     private void add(BSTNode root, BSTNode node) {
-        int index = node.compareTo(r);
+        int index = node.compareTo(root);
         if (index < 0) {
             // the element to be added is less than the root
             if (root.getLeft() == null) {
@@ -368,9 +358,6 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
      * Traverse the tree. travtype determines the type of traversal to perform.
      * 
      * **ORDERS**
-     * 
-     * 
-     * 
      * 
      */
     private void traverse(BSTNode r, int travType) {
@@ -422,34 +409,30 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
     
         BSTNode replacementParent = replacedNode;
         BSTNode replacement = replacedNode;
-        BSTNode focusNode = replacedNode.rightChild;
+        BSTNode focus = replacedNode.rightChild;
 
         // if there are no left children we do this
-
-        while (focusNode != null) {
+        while (focus != null) {
 
             replacementParent = replacement;
-
-            replacement = focusNode;
-
-            focusNode = focusNode.leftChild;
-
+            replacement = focus;
+            focus = focus.getLeft();
         }
 
 
         // moving the replacement node into the parent's leftchild node
         //and then move the replaced nodes righ child into the replacement's right child
+        if (replacement != replacedNode.getRight()) {
 
-        if (replacement != replacedNode.rightChild) {
-
-            replacementParent.leftChild = replacement.rightChild;
-            replacement.rightChild = replacedNode.rightChild;
+            replacementParent.setLeft(replacement.getRight());
+            replacement.setRight(replacedNode.getRight());
 
         }
         return replacement;
     }
 
-	public Avenger getData(Avenger hero) {
+	public T getData(T hero) {
 		return hero;
 	}
 }
+
