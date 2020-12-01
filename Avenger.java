@@ -53,11 +53,11 @@ public class Avenger implements Comparable<Avenger>{
 		this.lastName = lastName;
 	}
 
-	public void setSequenceMentioned(int numInSequence) {
+	public void setMentionedIndex(int numInSequence) {
 		sequenceMentioned = numInSequence;
 	}
 
-	public int getSequenceMentioned() {
+	public int getMentionedIndex() {
 		return sequenceMentioned;
 	}
 	
