@@ -72,8 +72,6 @@ private void readInput() {
                     hero.setMentionedIndex(avengerSequenceIndex);
 					alphabeticalBST.add(hero);
 					avengerSequenceIndex++;
-                    // alphabeticalBST.getData(hero).mentionIndexSetter(avengerMentionIndexValue); 
-                    //This increases the time complexity of operations, can be done prior to BST.add(T e).
 				}
             }
         }
