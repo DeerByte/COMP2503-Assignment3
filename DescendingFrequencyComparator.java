@@ -3,7 +3,7 @@
  */
 import java.util.Comparator;
 //DescendingComparator
-public class DescendingComparator implements Comparator<Avenger> {
+public class DescendingFrequencyComparator implements Comparator<Avenger> {
 
 	public int compare(Avenger a1, Avenger a2) {
 		int compareFrequency = a2.getFrequencyMentioned() - a1.getFrequencyMentioned();
