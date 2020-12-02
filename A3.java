@@ -15,8 +15,10 @@ public class A3 {
 
 	private int topN = 4;
 	private int totalwordcount = 0;
-	private int avengerSequenceIndex = 0;
-	private Scanner input = new Scanner(System.in);
+    private int avengerSequenceIndex = 0;
+    
+    private Scanner input = new Scanner(System.in);
+    
 	private BST<Avenger> mentionBST = new BST<>(new MentionIndexComparator());
 	private BST<Avenger> alphabeticalBST= new BST<>();
 	private BST<Avenger> mostPopularBST = new BST<> (new DescendingComparator());
@@ -39,10 +41,6 @@ public void run() {
     createdOrderedBST();
     printResults();
 }
-
-
-
-
 
 private void readInput() {
     /*
@@ -70,8 +68,7 @@ private void readInput() {
 					alphabeticalBST.find(hero).mentioned();
 				}
 		
-				else
-				{
+				else {
                     hero.setMentionedIndex(avengerSequenceIndex);
 					alphabeticalBST.add(hero);
 					avengerSequenceIndex++;
@@ -228,8 +225,4 @@ private String cleanWord(String next) {
         else
             return (int) Math.round(h);
     }
-
-
-
-
 }

@@ -19,6 +19,7 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
 
     /**
 	 * Non-parameterized constructor of BST class. 
+     * Follows natural ordering of the data objects
 	 * Sets size at 0, and root as null. 
 	 */
 	public BST() {
@@ -30,10 +31,10 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
      * Constructor. Instantiates a BSTobject with the argument of a comparator added
      * @param Comparator - Comparator used by the driver class to order
      */
-    public BST(Comparator <T> comp){
+    public BST(Comparator <T> comparator){
         root = null;
         size = 0;
-        comparator = comp;
+        this.comparator = comparator;
     }
     
     
@@ -94,22 +95,20 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
 
         @Override
         public int compareTo(BST<T>.BSTNode o) {
-            // Call compareTo method of an Avengers type Object
             return this.getData().compareTo(o.getData());
         }
 
+        // Might need further implementing
         @Override
         public String toString() {
             return getData().toString();
         }
 
-        /* TODO: equals method of BSTNode class */
         @Override
         public boolean equals(Object other) {
-            return false;
+            return data.equals(other);
         }
-    }
-// node class end   
+    } //Node Class End 
 
     /**
      * Finds height of the tree
@@ -122,7 +121,7 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
 
     /**
      * Add data of <T> type into the binary search tree
-     * @param data
+     * @param data of T type
      */
     public void add(T data) {
         BSTNode node = new BSTNode(data);
@@ -147,28 +146,28 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
     /**
      * Return the number of nodes in the tree.
      * 
-     * @return
+     * @return size of int type
      */
     public int size() {
         return size;
     }
 
     /**
-     * print method for in order they appear
+     * Print method for in order they appear
      */
     public void inOrder() {
         traverse(root, INORDER);
     }
 
     /**
-     * print method for post order
+     * Print method for post order
      */
     public void postOrder() {
         traverse(root, POSTORDER);
     }
 
     /**
-     * print method for pre order
+     * Print method for pre order
      */
     public void preOrder() {
         traverse(root, PREORDER);
@@ -182,131 +181,137 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
         return new BSTIterator<T>(this);
     }
 
-        /**
-         * Remove method
-         * @param other - Generic data type (avenger)
-         */
-        public boolean remove(T other) {
+    /**
+     * Remove method
+     * @param other - Generic data type (avenger)
+     */
+    public boolean remove(T other) {
 
-            BSTNode toRemove = new BSTNode(other);
-            BSTNode focus = root;
-            BSTNode parent = root;
-    
-            boolean isItALeftChild = true;
-    
+        BSTNode toRemove = new BSTNode(other);
+        BSTNode focus = root;
+        BSTNode parent = root;
+
+        boolean isItALeftChild = true;
+
+        if (isNaturalOrder()) {
             while (focus.compareTo(toRemove) != 0) {
-    
+
                 parent = focus;
     
                 // To find out if we go left or right
-                if (focus.compareTo(toRemove) == -1) {
+                if (focus.compareTo(toRemove) < 0) {
                     isItALeftChild = true;
                     focus = focus.getLeft();
-    
                 } else {
-
                     isItALeftChild = false;
                     focus = focus.getRight();
-    
+                }
+                // If node is not found false
+                if (focus == null) {
+                    return false;
                 }
     
-                // If node is not found false
-                if (focus == null)
-                    return false;
-    
             }
-    
-            // Case of which node has no children
-    
-            if (focus.getLeft() == null && focus.getRight() == null) {
-    
-                // if it is just simply a root, we delete it
-
-                if (focus == root)
-                    root = null;
-    
-                // If it was marked as a left child
-                // of the parent delete it in its parent
-    
-                else if (isItALeftChild)
-                    parent.setLeft(null);
-    
-                // opposite for right
-    
-                else
-                    parent.setRight(null);
-    
-            }
-    
-            // If no right child
-    
-            else if (focus.getRight() == null) {
-    
-                if (focus == root)
-                    root = focus.getLeft();
-    
-                // If focus Node was on the left of parent
-                // move the focus Nodes left child up to the
-                // parent node
-    
-                else if (isItALeftChild)
-                    parent.setLeft(focus.getLeft());
-
-    
-                else
-                    parent.setRight(focus.getLeft());
-
-    
-            }
-    
-            // If no left child
-    
-            else if (focus.getLeft() == null) {
-    
-                if (focus == root)
-                    root = focus.getRight();
-    
-                // If focus Node was on the left of parent
-                // move the focus Nodes right child up to the
-                // parent node
-    
-                else if (isItALeftChild)
-                    parent.setLeft(focus.getRight());
-    
-                else
-                    parent.setRight(focus.getRight());
-    
-            }
-    
-            // Case of two children we need to find a replacement node with a helper method
-    
-            else {
-
-                BSTNode replacement = getReplacementNode(focus);
-    
-                // If the focus is root replace root
-                // with the replacement
-    
-                if (focus == root)
-                    root = replacement;
-    
-                // If the deleted node was a left child
-                // make the replacement the left child
-    
-                else if (isItALeftChild)
-                    parent.setLeft(replacement);
-    
-                // we do the opposite for right child
-    
-                else
-                    parent.setLeft(replacement);
-    
-                replacement.setLeft(focus.getLeft());
-    
-            }  
-
-            return true;
         }
+        else {
+            while (comparator.compare(focus.getData(), toRemove.getData()) != 0) {
+
+                parent = focus;
+    
+                // To find out if we go left or right
+                if (comparator.compare(focus.getData(), toRemove.getData()) < 0) {
+                    isItALeftChild = true;
+                    focus = focus.getLeft();
+                } else {
+                    isItALeftChild = false;
+                    focus = focus.getRight();
+                }
+                // If node is not found false
+                if (focus == null) {
+                    return false;
+                }
+            }
+        }
+        
+
+        // Case of which node has no children
+        if (focus.getLeft() == null && focus.getRight() == null) {
+
+            // if it is just simply a root, we delete it
+            if (focus == root) {
+                root = null;
+            }
+            // If it was marked as a left child
+            // of the parent delete it in its parent
+            else if (isItALeftChild) {
+                parent.setLeft(null);
+            }
+            // opposite for right
+            else {
+                parent.setRight(null);
+            }
+        }
+
+        // If no right child
+        else if (focus.getRight() == null) {
+
+            if (focus == root) {
+                root = focus.getLeft();
+            }
+            // If focus Node was on the left of parent
+            // move the focus Nodes left child up to the
+            // parent node
+            else if (isItALeftChild) {
+                parent.setLeft(focus.getLeft());
+            }
+            else {
+                parent.setRight(focus.getLeft());
+            }
+
+        }
+
+        // If no left child
+        else if (focus.getLeft() == null) {
+
+            if (focus == root) {
+                root = focus.getRight();
+            }
+            // If focus Node was on the left of parent
+            // move the focus Nodes right child up to the
+            // parent node
+            else if (isItALeftChild) {
+                parent.setLeft(focus.getRight());
+            }
+            else {
+                parent.setRight(focus.getRight());
+            }
+        }
+
+        // Case of two children we need to find a replacement node with a helper method
+
+        else {
+
+            BSTNode replacement = getReplacementNode(focus);
+
+            // If the focus is root replace root
+            // with the replacement
+            if (focus == root) {
+                root = replacement;
+            }
+            // If the deleted node was a left child
+            // make the replacement the left child
+            else if (isItALeftChild) {
+                parent.setLeft(replacement);
+            }
+            // we do the opposite for right child
+            else {
+                parent.setLeft(replacement);
+            }
+            replacement.setLeft(focus.getLeft());
+        }  
+
+        return true;
+    }
     
     // Private methods.
 
@@ -317,16 +322,27 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
      * @return T
      */
     private T find(T data, BSTNode root) {
-        if (root == null)
+        int c;
+        if (root == null) {
             return null;
-        int c = data.compareTo(root.getData());
+        }
 
-        if (c == 0)
+        if (isNaturalOrder()) {
+            c = data.compareTo(root.getData());
+        }
+        else {
+            c = comparator.compare(data, root.getData());
+        }
+
+        if (c == 0) {
             return root.getData();
-        else if (c < 0)
+        }
+        else if (c < 0) {
             return find(data, root.getLeft());
-        else
+        }
+        else {
             return find(data, root.getRight());
+        }
     }
 
     /**
@@ -337,7 +353,15 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
      * 
      */
     private void add(BSTNode root, BSTNode node) {
-        int index = node.compareTo(root);
+
+        int index;
+        if (isNaturalOrder()) {
+            index = node.compareTo(root);
+        }
+        else {
+            index = comparator.compare(root.getData(), node.getData());
+        }
+        
         if (index < 0) {
             // the element to be added is less than the root
             if (root.getLeft() == null) {
@@ -424,7 +448,6 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
     }
 
     /**
-     * 
      * Helper method for remove method to get the replacement node
      * @param replacedNode - BSTNode
      * @return BSTNode
@@ -438,20 +461,16 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
 
         // find if no left child
         while (focus != null) {
-
             replacementParent = replacement;
             replacement = focus;
             focus = focus.getLeft();
         }
 
-
         //moving the replacement node into the parent's leftchild node
         //then move the replaced nodes right child into the replacement's right child
         if (replacement != replacedNode.getRight()) {
-
             replacementParent.setLeft(replacement.getRight());
             replacement.setRight(replacedNode.getRight());
-
         }
         return replacement;
     }
@@ -463,8 +482,12 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
      */
 	public T getData(T hero) {
 		return hero;
-	}
+    }
+    
+    private boolean isNaturalOrder() {
+        if (comparator == null) {
+            return true;
+        }
+        return false;
+    }
 }
-
-
-
