@@ -4,6 +4,8 @@ import java.util.NoSuchElementException;
  * Queue data structure based off a linked list. Creates an unbounded queue-like linked list that uses FIFO ordering. Elements are added to the tail of the queue. 
  * Only the head of the queue is accessible, and must be removed to access subsequent nodes.
  * 
+ * Reference: https://docs.oracle.com/en/java/javase/15/docs/api/java.base/java/util/Queue.html
+ * 
  * @author DeerByte
  * 
  */
@@ -35,6 +37,9 @@ public class LinkedQueue<T> {
      * @param e - Element added to LinkedQueue.
      */
     public void add(T e) {
+        if (e == null) {
+            throw new NullPointerException();
+        }
         Node<T> node = new Node<>(e);
 
         if (head == null) {
@@ -63,12 +68,15 @@ public class LinkedQueue<T> {
     }
 
     /**
-     * Returns the head of the LinkedQueue, removing the element
-     * @return T - element at head of queue
-     * @throws NoSuchElementException - if the queue is empty
+     * Removes and returns element at head of the LinkedQueue. If the queue is empty, returns null.
+     * @return  element at head of queue, or null if queue is empty.
      */
     public T poll() {
-        return remove();
+        if (head == null) {
+            return null;
+        }
+        return head.getData();
+        
     }
 
     /**
