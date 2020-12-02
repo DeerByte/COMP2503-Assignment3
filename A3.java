@@ -21,8 +21,8 @@ public class A3 {
     
 	private BST<Avenger> mentionBST = new BST<>(new MentionIndexComparator());
 	private BST<Avenger> alphabeticalBST= new BST<>();
-	private BST<Avenger> mostPopularBST = new BST<> (new DescendingComparator());
-    private BST<Avenger> leastPopularBST = new BST<>(new AscendingComparator());
+	private BST<Avenger> mostPopularBST = new BST<> (new DescendingFrequencyComparator());
+    private BST<Avenger> leastPopularBST = new BST<>(new AscendingFrequencyComparator());
     //private LinkedQueue<String> mentionQueue = new LinkedQueue<>();
     
 
