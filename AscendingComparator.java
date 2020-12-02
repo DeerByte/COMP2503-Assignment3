@@ -17,6 +17,7 @@ public class AscendingComparator implements Comparator<Avenger>{
         }
 
         int compareLastNameSize = a1.getLastName().length() - a2.getLastName().length();
+        //int compareLastNameSize = a2.getLastName().length() - a1.getLastName().length();
 
         if (compareLastNameSize != 0) {
             return compareLastNameSize;

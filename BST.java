@@ -205,7 +205,7 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
                 parent = focus;
     
                 // To find out if we go left or right
-                if (focus.compareTo(toRemove) < 0) {
+                if (focus.compareTo(toRemove) > 0) {
                     isItALeftChild = true;
                     focus = focus.getLeft();
                 } else {
@@ -428,13 +428,13 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
                     visit(r, queue);
                     traverse(r.getRight(), queue, travType);
                     break;
-
+                    
                 case PREORDER:
                     visit(r, queue);
                     traverse(r.getLeft(), queue, travType);
                     traverse(r.getRight(), queue, travType);
                     break;
-                    
+
                 case POSTORDER:
                     traverse(r.getLeft(), queue, travType);
                     traverse(r.getRight(), queue, travType);

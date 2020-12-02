@@ -102,6 +102,7 @@ public class Avenger implements Comparable<Avenger>{
 	
 	/**
 	 * Comparable implementation. Used to order Avenger objects by increasing alphabetic order of heroAlias.
+	 * TODO: @return ??
 	 */
 	public int compareTo(Avenger other) {
 		return heroAlias.compareTo(other.getAlias());
