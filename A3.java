@@ -72,7 +72,8 @@ private void readInput() {
                     hero.setMentionedIndex(avengerSequenceIndex);
 					alphabeticalBST.add(hero);
 					avengerSequenceIndex++;
-					// alphabeticalBST.getData(hero).mentionIndexSetter(avengerMentionIndexValue); This increases the time complexity of operations, can be done prior to BST.add(T e).
+                    // alphabeticalBST.getData(hero).mentionIndexSetter(avengerMentionIndexValue); 
+                    //This increases the time complexity of operations, can be done prior to BST.add(T e).
 				}
             }
         }
@@ -172,13 +173,11 @@ private String cleanWord(String next) {
 		System.out.println("Top " + topN + " most popular avengers:");
 
         Iterator<Avenger> mostPopularPrint = mostPopularBST.iterator();
-        for (int i = 0; i < 4 && mostPopularPrint.hasNext(); i++){
-            System.out.println(mostPopularPrint.next());
-        }
-
-        while (mostPopularPrint.hasNext())
-        {
-            System.out.println(mostPopularPrint.next());
+        for (int i = 0; i < 4; i++){
+            if (mostPopularPrint.hasNext()){
+                System.out.println(mostPopularPrint.next());
+            }
+            
         }
 		
 		System.out.println();
@@ -186,13 +185,11 @@ private String cleanWord(String next) {
 		System.out.println("Top " + topN + " least popular avengers:");
 
         Iterator<Avenger> leastPopularPrint = leastPopularBST.iterator();
-        for (int i = 0; i < 4 && leastPopularPrint.hasNext(); i++){
-            System.out.println(leastPopularPrint.next());
-        }
-        while (leastPopularPrint.hasNext())
-        
-        {
-            System.out.println(leastPopularPrint.next());
+        for (int i = 0; i < 4; i++){
+            if (leastPopularPrint.hasNext()) {
+                System.out.println(leastPopularPrint.next());
+            }
+            
         }
 		
 		System.out.println();
@@ -207,9 +204,19 @@ private String cleanWord(String next) {
         }
 		
         System.out.println();
+        // Mention, alpha, most, least
         
         System.out.println("Height of the mention order tree is : " + mentionBST.height()
         + " (Optimal height for this tree is : " + optimalHeight(mentionBST.size()) + ")");
+
+        System.out.println("Height of the alphabetical tree is : " + alphabeticalBST.height()
+        + " (Optimal height for this tree is : " + optimalHeight(alphabeticalBST.size()) + ")");
+
+        System.out.println("Height of the most frequent tree is : " + mostPopularBST.height()
+        + " (Optimal height for this tree is : " + optimalHeight(mostPopularBST.size()) + ")");
+        
+        System.out.println("Height of the least frequent tree is : " + leastPopularBST.height()
+        + " (Optimal height for this tree is : " + optimalHeight(leastPopularBST.size()) + ")");
 
 
   
