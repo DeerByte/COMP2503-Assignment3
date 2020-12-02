@@ -3,13 +3,10 @@ import java.util.NoSuchElementException;
 
 public class BSTIterator<T extends Comparable<T>> implements Iterator<T>{
     private Node<T> pointer;
-
-    public BSTIterator(LinkedQueue<T> queue) {
-        pointer = queue.getHead();
-    }
-
+    
     public BSTIterator(BST<T> binaryTree) {
-     // Requires method to extract Node data into LinkedQueue.
+        LinkedQueue<T> queue = binaryTree.inOrder();
+        pointer = queue.getHead();
     }
 
     public boolean hasNext(){
