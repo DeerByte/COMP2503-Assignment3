@@ -1,6 +1,13 @@
 import java.util.Comparator;
 import java.util.Iterator;
 
+/**
+ * Binary Search Tree structure. Methods for adding, removing, traversing, finding, as well as a few helper methods
+ * 
+ * @author Hoang Vo, Justin Gajer
+ * 
+ */
+
 public class BST<T extends Comparable<T>> implements Iterable<T> {
     
     private Comparator<T> comparator;
@@ -19,13 +26,17 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
         size = 0;
 	}
 
+    /**
+     * Constructor. Instantiates a BSTobject with the argument of a comparator added
+     * @param Comparator - Comparator used by the driver class to order
+     */
     public BST(Comparator <T> comp){
         root = null;
         size = 0;
         comparator = comp;
     }
     
-
+    
     class BSTNode implements Comparable<BSTNode> {
         private T data;
         private BSTNode left;
@@ -44,7 +55,6 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
 
         /**
          * BSTNode constructor taking one parameter of <T> type data.
-         * 
          * @param d given data point of <T> type inserted into a node
          */
         public BSTNode(T data) {
@@ -102,10 +112,9 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
 // node class end   
 
     /**
-     * TODO: find() javadoc of BST class Return true if element data is present in
-     * the tree.
-     * 
-     * @return data
+     * Finds height of the tree
+     * @param data
+     * @return data, root from the private find method
      */
     public T find(T data) {
         return find(data, root);
@@ -113,6 +122,7 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
 
     /**
      * Add data of <T> type into the binary search tree
+     * @param data
      */
     public void add(T data) {
         BSTNode node = new BSTNode(data);
@@ -144,32 +154,37 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
     }
 
     /**
-     * TODO: javadoc
+     * print method for in order they appear
      */
     public void inOrder() {
         traverse(root, INORDER);
     }
 
     /**
-     * TODO: javadoc
+     * print method for post order
      */
     public void postOrder() {
         traverse(root, POSTORDER);
     }
 
     /**
-     * TODO: javadoc
+     * print method for pre order
      */
     public void preOrder() {
         traverse(root, PREORDER);
     }
 
+    /**
+     * Iterator create
+     * @return iterator
+     */
     public Iterator<T> iterator() {
         return new BSTIterator<T>(this);
     }
 
-    /**
-         * REMOVE METHOD, UNTESTED
+        /**
+         * Remove method
+         * @param other - Generic data type (avenger)
          */
         public boolean remove(T other) {
 
@@ -292,11 +307,15 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
 
             return true;
         }
-
-
     
     // Private methods.
 
+    /**
+     * find method
+     * @param data - Generic Type
+     * @param root - BSTNode
+     * @return T
+     */
     private T find(T data, BSTNode root) {
         if (root == null)
             return null;
@@ -310,7 +329,13 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
             return find(data, root.getRight());
     }
 
-    /* Do the actual add of node n to tree rooted at r */
+    /**
+     * 
+     * add method for adding an element to the tree
+     * @param root BSTNode
+     * @param node BSTNode
+     * 
+     */
     private void add(BSTNode root, BSTNode node) {
         int index = node.compareTo(root);
         if (index < 0) {
@@ -338,7 +363,11 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
         }
     }
 
-    /* Implement a height method. */
+    /**
+     * finds the height of the tree
+     * @param Node - BSTNode
+     * @return int
+     */
     private int height(BSTNode Node) {
         if (Node == null) {
             return -1;
@@ -354,10 +383,11 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
         }
     }
 
-    /*
-     * Traverse the tree. travtype determines the type of traversal to perform.
+    /**
      * 
-     * **ORDERS**
+     * Traverses the tree using switch case base on order
+     * @param r - BSTNode
+     * @param travetype - int
      * 
      */
     private void traverse(BSTNode r, int travType) {
@@ -381,37 +411,32 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
             }
         }
     }
-
+    
+    /**
+     * 
+     * visit helper method for traversal method. Returns null if empty or it will print the root data
+     * @param root - BSTNode
+     * 
+     */
     private void visit(BSTNode root) {
         if (root != null)
             System.out.println(root.getData());
     }
 
-    /* traverse the subtree r using level order. */
-    private void levelOrder(BSTNode r) {
-        BSTNode currNode = r;
-        Queue<BSTNode> q = new Queue<BSTNode>();
-
-        q.enqueue(currNode);
-
-        while (!q.isEmpty()) {
-            currNode = q.dequeue();
-            visit(currNode);
-            if (currNode.getLeft() != null)
-                q.enqueue(currNode.getLeft());
-            if (currNode.getRight() != null)
-                q.enqueue(currNode.getRight());
-        }
-    }
-
-    //Helper method for remove method to get the replacement node
+    /**
+     * 
+     * Helper method for remove method to get the replacement node
+     * @param replacedNode - BSTNode
+     * @return BSTNode
+     * 
+     */
     private BSTNode getReplacementNode(BSTNode replacedNode) {
     
         BSTNode replacementParent = replacedNode;
         BSTNode replacement = replacedNode;
         BSTNode focus = replacedNode.rightChild;
 
-        // if there are no left children we do this
+        // find if no left child
         while (focus != null) {
 
             replacementParent = replacement;
@@ -420,8 +445,8 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
         }
 
 
-        // moving the replacement node into the parent's leftchild node
-        //and then move the replaced nodes righ child into the replacement's right child
+        //moving the replacement node into the parent's leftchild node
+        //then move the replaced nodes right child into the replacement's right child
         if (replacement != replacedNode.getRight()) {
 
             replacementParent.setLeft(replacement.getRight());
@@ -431,8 +456,15 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
         return replacement;
     }
 
+    /**
+     * Method for retrieving avenger data
+     * @param hero - T generic type
+     * @param root - BSTNode
+     */
 	public T getData(T hero) {
 		return hero;
 	}
 }
+
+
 
