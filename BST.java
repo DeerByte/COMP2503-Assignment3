@@ -155,22 +155,28 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
     /**
      * Print method for in order they appear
      */
-    public void inOrder() {
-        traverse(root, INORDER);
+    public LinkedQueue<T> inOrder() {
+        LinkedQueue<T> queue = new LinkedQueue<>();
+        traverse(root, queue, INORDER);
+        return queue;
     }
 
     /**
      * Print method for post order
      */
-    public void postOrder() {
-        traverse(root, POSTORDER);
+    public LinkedQueue<T> postOrder() {
+        LinkedQueue<T> queue = new LinkedQueue<>();
+        traverse(root, queue, POSTORDER);
+        return queue;
     }
 
     /**
      * Print method for pre order
      */
-    public void preOrder() {
-        traverse(root, PREORDER);
+    public LinkedQueue<T> preOrder() {
+        LinkedQueue<T> queue = new LinkedQueue<>();
+        traverse(root, queue, PREORDER);
+        return queue;
     }
 
     /**
@@ -414,23 +420,25 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
      * @param travetype - int
      * 
      */
-    private void traverse(BSTNode r, int travType) {
+    private void traverse(BSTNode r, LinkedQueue<T> queue, int travType) {
         if (r != null) {
             switch (travType) {
                 case INORDER:
-                    traverse(r.getLeft(), travType);
-                    visit(r);
-                    traverse(r.getRight(), travType);
+                    traverse(r.getLeft(), queue, travType);
+                    visit(r, queue);
+                    traverse(r.getRight(), queue, travType);
                     break;
+
                 case PREORDER:
-                    visit(r);
-                    traverse(r.getLeft(), travType);
-                    traverse(r.getRight(), travType);
+                    visit(r, queue);
+                    traverse(r.getLeft(), queue, travType);
+                    traverse(r.getRight(), queue, travType);
                     break;
+                    
                 case POSTORDER:
-                    traverse(r.getLeft(), travType);
-                    traverse(r.getRight(), travType);
-                    visit(r);
+                    traverse(r.getLeft(), queue, travType);
+                    traverse(r.getRight(), queue, travType);
+                    visit(r, queue);
                     break;
             }
         }
@@ -442,9 +450,10 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
      * @param root - BSTNode
      * 
      */
-    private void visit(BSTNode root) {
-        if (root != null)
-            System.out.println(root.getData());
+    private void visit(BSTNode root, LinkedQueue<T> queue) {
+        if (root != null) {
+            queue.add(root.getData());
+        }
     }
 
     /**
