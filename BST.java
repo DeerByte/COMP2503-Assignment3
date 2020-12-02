@@ -368,7 +368,7 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
             index = comparator.compare(root.getData(), node.getData());
         }
         
-        // if (index  0) {
+        
             if (index < 0) {
             // the element to be added is less than the root
             if (root.getLeft() == null) {
