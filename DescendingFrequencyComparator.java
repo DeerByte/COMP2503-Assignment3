@@ -9,7 +9,7 @@ public class DescendingFrequencyComparator implements Comparator<Avenger> {
 		int compareFrequency = a2.getFrequencyMentioned() - a1.getFrequencyMentioned();
 		
 		if (compareFrequency == 0) {
-			return a2.getAlias().compareTo(a1.getAlias());
+			return a1.getAlias().compareTo(a2.getAlias());
 			
 		} else {
             return compareFrequency;

@@ -28,7 +28,7 @@ public class A3 {
 
 /*
 - Includes the run method
-- Reads the input, removes Hawekeye, print results and created ordered BST
+- Reads the input, removes Hawekeye, print results and creates ordered BST
 */
 public static void main(String[] args) {
     A3 a3 = new A3();

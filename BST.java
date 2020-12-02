@@ -248,7 +248,7 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
                 root = null;
             }
             // If it was marked as a left child
-            // of the parent delete it in its parent
+            // of the parent, remove it from its parent's field
             else if (isItALeftChild) {
                 parent.setLeft(null);
             }
@@ -368,7 +368,8 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
             index = comparator.compare(root.getData(), node.getData());
         }
         
-        if (index < 0) {
+        // if (index  0) {
+            if (index < 0) {
             // the element to be added is less than the root
             if (root.getLeft() == null) {
                 // there is no left node so
