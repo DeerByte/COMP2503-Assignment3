@@ -1,0 +1,20 @@
+Ryan SObolewski
+- BSTIterator, implementation of Iterable.
+- LinkedQueue Data thing
+-Helped with A3
+- Avenger and Node classes
+- MentionIndexComparator
+- helped with Ascending and Descending Comparator
+
+Hoang Vo
+- BST and BSTNode
+- JavaDoc
+
+Justin Gajer
+- BST and BSTNode
+- Node class
+
+Zain
+- A3
+- AscendingFrequencyComparator and DescendingFrequencyComparator
+
