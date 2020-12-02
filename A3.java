@@ -1,7 +1,11 @@
 import java.util.Scanner;
 import java.util.Iterator;
 
+/*driver class
 
+/ Class created to implement the word count, avengerindex, run method, orderedBST, and print results
+
+*/
 public class A3 {
 
     private static final String[][] AVENGER_ROSTER = { { "captainamerica", "rogers" }, { "ironman", "stark" },
@@ -20,7 +24,10 @@ public class A3 {
     //private LinkedQueue<String> mentionQueue = new LinkedQueue<>();
     
 
-
+/*
+- Includes the run method
+- Reads the input, removes Hawekeye, print results and created ordered BST
+*/
 public static void main(String[] args) {
     A3 a3 = new A3();
     a3.run();
@@ -127,8 +134,12 @@ private String cleanWord(String next) {
 		return new Avenger(AVENGER_ROSTER[rosterIndex][0], AVENGER_ROSTER[rosterIndex][1], 1);
 	}
 
- 
-    
+   /**
+    * Creates an orderedBST that includes 3 different BST methods
+    * -Most popular BST will print the 4 most poular ones
+    * -Least popular BST will print the 4 least popular ones
+    */
+
     private void createdOrderedBST() {
     for (Avenger a : alphabeticalBST)
         {
@@ -204,15 +215,11 @@ private String cleanWord(String next) {
         + " (Optimal height for this tree is : " + optimalHeight(mentionBST.size()) + ")");
 
 
-        // TODO: Print the actual height and the optimal height for each of the four trees.
-//		System.out.println("Height of the mention order tree is : " + ??
-//				+ " (Optimal height for this tree is : " + ?? + ")");
-//		System.out.println("Height of the alphabetical tree is : " + ??
-//				+ " (Optimal height for this tree is : " + ?? + ")");
-//		System.out.println("Height of the most frequent tree is : " + ??
-//				+ " (Optimal height for this tree is : " + ?? + ")");
-//		System.out.println("Height of the least frequent tree is : " + ??
-//				+ " (Optimal height for this tree is : " + ?? + ")");
+  
+
+/** 
+ * Optimalheight method created to print the actual heigh and optimal height for all four trees
+ */
     }
     private int optimalHeight (int n){
         double h = Math.log(n + 1) / Math.log(2) - 1;
