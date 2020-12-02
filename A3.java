@@ -218,13 +218,15 @@ private String cleanWord(String next) {
         System.out.println("Height of the least frequent tree is : " + leastPopularBST.height()
         + " (Optimal height for this tree is : " + optimalHeight(leastPopularBST.size()) + ")");
 
+        System.out.println();
+    }
 
   
 
 /** 
  * Optimalheight method created to print the actual heigh and optimal height for all four trees
  */
-    }
+    
     private int optimalHeight (int n){
         double h = Math.log(n + 1) / Math.log(2) - 1;
         if (Math.round(h) < h)
